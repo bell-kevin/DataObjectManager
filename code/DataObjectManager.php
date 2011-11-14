@@ -812,7 +812,7 @@ class DataObjectManager_Popup extends Form {
 		Requirements::clear_combined_files();
 		// added prototype.js to provide support for TreeDropdownField
 		Requirements::javascript(THIRDPARTY_DIR.'/prototype/prototype.js');
-	    Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
+	    Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery-packed.js');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery-livequery/jquery.livequery.js');    
 		Requirements::block(THIRDPARTY_DIR.'/behaviour.js');
 		Requirements::block(SAPPHIRE_DIR.'/javascript/Validator.js');

@@ -41,7 +41,7 @@ class LiveDropdownField extends HiddenField {
 				$text = $record->{$this->labelField};
 			}
 		}
-		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
+		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery-packed.js');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery-metadata/jquery.metadata.js');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery-livequery/jquery.livequery.js');
 

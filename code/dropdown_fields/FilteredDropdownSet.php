@@ -29,7 +29,7 @@ class FilteredDropdownSet extends FieldGroup {
 
 	
 	public function FieldHolder() {
-		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery.js');
+		Requirements::javascript(THIRDPARTY_DIR.'/jquery/jquery-packed.js');
 		Requirements::javascript(THIRDPARTY_DIR.'/jquery-metadata/jquery.metadata.js');
 		Requirements::javascript('dataobject_manager/code/dropdown_fields/javascript/filtered_dropdown_set.js');
 		foreach($this->children as $child) {

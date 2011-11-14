@@ -217,7 +217,7 @@ class SimpleTinyMCEField extends TextareaField
 
   function Field()
   {
-    Requirements::javascript(THIRDPARTY_DIR."/jquery/jquery.js");
+    Requirements::javascript(THIRDPARTY_DIR."/jquery/jquery-packed.js");
     Requirements::javascript("dataobject_manager/code/simple_tinymce_field/javascript/tiny_mce/jquery.tinymce.js");
     Requirements::javascript("dataobject_manager/code/simple_tinymce_field/javascript/tiny_mce/tiny_mce.js");
     Requirements::customScript($this->buildJS());
