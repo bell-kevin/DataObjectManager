@@ -60,7 +60,7 @@ class ManyManyDataObjectManager extends HasManyDataObjectManager
 			$sourceField = 'Child';
 		$parentID = $this->controller->ID;
 		
-		$this->sourceJoin .= " LEFT JOIN \"$manyManyTable\" ON (\"$source\".\"ID\" = \"{$sourceField}ID\" AND \"$manyManyTable\".\"{$this->manyManyParentClass}ID\" = '$parentID')";
+		$this->sourceJoin .= " LEFT JOIN \"$manyManyTable\" ON (\"$source\".\"ID\" = \"$manyManyTable\".\"{$sourceField}ID\" AND \"$manyManyTable\".\"{$this->manyManyParentClass}ID\" = '$parentID')";
 		
 		$this->joinField = 'Checked';
 		if(isset($_REQUEST['ctf'][$this->Name()]['only_related']))
@@ -191,6 +191,7 @@ class ManyManyDataObjectManager extends HasManyDataObjectManager
 		return <<<HTML
 		<input name="controllerID" type="hidden" value="$controllerID" />
 		<input id="$inputId" name="{$this->name}[{$this->htmlListField}]" type="hidden" value="$value"/>
+		<input id="{$inputId}_UnChecked" name="{$this->name}[{$this->htmlListField}_UnChecked]" type="hidden" value=""/>
 HTML;
 	}
 
@@ -202,7 +203,7 @@ HTML;
 	function getSelectedIDs() {
 		$ids = array();
 		$dataQuery = $this->getQuery();
-		$dataQuery->having("Checked = '1'");
+		$dataQuery->where("(\"$this->manyManyTable\".\"{$this->manyManyParentClass}ID\" IS NOT NULL)");		
 		$records = $dataQuery->execute();
 		$class = $this->sourceClass;
 		foreach($records as $record) {

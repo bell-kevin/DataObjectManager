@@ -10,6 +10,7 @@ class FileDataObjectManager extends DataObjectManager
 	public static $upgrade_video = true;
 	public static $upgrade_image = true;
 	public static $upload_limit  = "40";
+	public static $copy_on_import = true;
 	
 	public $view;
 	public $default_view = "grid";
@@ -18,6 +19,7 @@ class FileDataObjectManager extends DataObjectManager
 	protected $limitFileTypes;
 	protected $uploadLimit;
 	protected $allowUploadFolderSelection = true;
+	protected $allowDragDrop = true;
 	protected $enableUploadDebugging = false;
 	public $hasDataObject = true;
 	public $importClass = "File";
@@ -43,7 +45,7 @@ class FileDataObjectManager extends DataObjectManager
 	
 	public $uploadifyField = "MultipleFileUploadField";
 	
-	public $copyOnImport = true;
+	public $copyOnImport;
 	
 	public function __construct($controller, $name = null, $sourceClass = null, $fileFieldName = null, $fieldList = null, $detailFormFields = null, $sourceFilter = "", $sourceSort = "", $sourceJoin = "") 
 	{
@@ -195,6 +197,16 @@ class FileDataObjectManager extends DataObjectManager
 		return $this->getSetting('uploadLimit');
 	}
 	
+	public function setCopyOnImport($bool)
+	{
+		$this->copyOnImport = $bool;
+	}
+	
+	public function getCopyOnImport()
+	{
+		return $this->getSetting('copyOnImport');
+	}
+	
 	public function setBrowseButtonText($text)
 	{
 		$this->browseButtonText = $text;
@@ -213,6 +225,11 @@ class FileDataObjectManager extends DataObjectManager
 	public function allowUploadFolderSelection()
 	{
 		$this->allowUploadFolderSelection = true;
+	}
+	
+	public function allowDragDrop()
+	{
+		return $this->allowDragDrop ? true : false;
 	}
 	
 	public function enableUploadDebugging()
@@ -427,7 +444,7 @@ class FileDataObjectManager extends DataObjectManager
 				if($file = DataObject::get_by_id("File", (int) $id)) {
 					$upload_folder = $form->Fields()->fieldByName('UploadedFiles')->uploadFolder;
 					$folder_id = Folder::findOrMake($upload_folder)->ID;
-					if($this->copyOnImport && ($file->ParentID != $folder_id)) {
+					if($this->getCopyOnImport() && ($file->ParentID != $folder_id)) {
 						$new_file_path = $upload_folder.'/'.$file->Name;
 						copy($file->getFullPath(), BASE_PATH.'/'.ASSETS_DIR.'/'.$new_file_path);
 						$clone = new $file_class();

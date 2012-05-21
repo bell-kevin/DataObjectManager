@@ -140,6 +140,7 @@ class HasManyDataObjectManager extends DataObjectManager
 		$inputId = $this->id() . '_' . $this->htmlListEndName;
 		return <<<HTML
 		<input id="$inputId" name="{$this->name}[{$this->htmlListField}]" type="hidden" value="{$value}"/>
+		<input id="{$inputId}_UnChecked" name="{$this->name}[{$this->htmlListField}_UnChecked]" type="hidden" value=""/>
 HTML;
 	}
 
@@ -151,7 +152,7 @@ HTML;
 	function getSelectedIDs() {
 		$ids = array();
 		$dataQuery = $this->getQuery();
-		$dataQuery->having("{$this->joinField} = '{$this->controller->ID}'");
+		$dataQuery->where("\"{$this->joinField}\" = '{$this->controller->ID}'");
 		$records = $dataQuery->execute();
 		$class = $this->sourceClass;
 		foreach($records as $record) {
